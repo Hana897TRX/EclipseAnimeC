@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "463214212097",
+    "project_id": "eclipseanimec",
+    "storage_bucket": "eclipseanimec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463214212097:android:1698919b57223e1b12bc00",
+        "android_client_info": {
+          "package_name": "com.hana897trx.eclipseanime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463214212097-uncf8hp4v21audauina86dosdtochus8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_U1dyYhHc8VFcBUhkD0h3-dRt-OZaMz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463214212097-uncf8hp4v21audauina86dosdtochus8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
