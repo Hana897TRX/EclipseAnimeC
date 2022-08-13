@@ -5,6 +5,7 @@ import com.hana897trx.eclipseanime.data.remote.models.LatestM
 import com.hana897trx.eclipseanime.data.repository.LatestRepository
 import com.hana897trx.eclipseanime.di.IOContext
 import com.hana897trx.eclipseanime.utils.DataSource
+import com.hana897trx.eclipseanime.utils.ErrorCodes
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -14,12 +15,12 @@ class LatestAnimeUseCase @Inject constructor(
    private val latestRepository: LatestRepository,
    @IOContext private val contextIO: CoroutineDispatcher
 ) {
-   operator fun invoke(networkSource: NetworkSource = NetworkSource.REMOTE) = flow<DataSource<List<LatestM>>> {
+   operator fun invoke(networkSource: NetworkSource = NetworkSource.REMOTE) = flow {
       emit(DataSource.Loading)
       try {
          emit(DataSource.Success(latestRepository.getLatest(networkSource)))
       } catch (e: Exception) {
-         emit(DataSource.Error(message = e.message.orEmpty(), code = e.hashCode()))
+         emit(DataSource.Error(message = e.message.orEmpty(), errorCode = ErrorCodes.NONE_ERROR))
       }
    }.flowOn(contextIO)
 }
