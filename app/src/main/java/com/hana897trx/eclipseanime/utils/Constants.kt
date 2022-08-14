@@ -21,3 +21,7 @@ object AnimeSchema {
     const val SchemaName = "anime"
     const val UpdatedField = "updated"
 }
+
+object Screens {
+    const val HOME_SCREEN = "home"
+}
