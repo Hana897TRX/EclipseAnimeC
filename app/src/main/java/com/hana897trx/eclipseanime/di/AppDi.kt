@@ -3,6 +3,8 @@ package com.hana897trx.eclipseanime.di
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.hana897trx.eclipseanime.data.repository.LatestRepository
+import com.hana897trx.eclipseanime.data.repository.LatestRepositoryImp
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
