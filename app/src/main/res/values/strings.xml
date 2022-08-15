@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">EclipseAnimeC</string>
+    
+    <string name="home_latest_chapters">Latest Chapters</string>
+    <string name="home_show_more_btn_content">Show more</string>
 </resources>

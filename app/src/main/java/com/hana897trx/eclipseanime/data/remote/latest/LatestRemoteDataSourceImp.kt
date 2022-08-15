@@ -8,40 +8,30 @@ import com.hana897trx.eclipseanime.utils.AnimeSchema.SchemaName
 import com.hana897trx.eclipseanime.utils.AnimeSchema.UpdatedField
 import com.hana897trx.eclipseanime.utils.DataSource
 import com.hana897trx.eclipseanime.utils.ErrorCodes
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class LatestRemoteDataSourceImp @Inject constructor(
-   private val fbDB : FirebaseFirestore
-): LatestRemoteDataSource {
-   override suspend fun getLatest(): Flow<DataSource<List<LatestM>>> = flow {
-      fbDB.collection(SchemaName)
-         .orderBy(UpdatedField)
-         .limit(PAGINATION_VALUE)
-         .get()
-         .addOnSuccessListener { response ->
-            val docs = response.documents
-            if (docs.isNotEmpty()) {
-               GlobalScope.launch {
-                  emit(
-                     DataSource.Success(docs.toMapLatest())
-                  )
-               }
-            } else {
-               GlobalScope.launch {
-                  emit(
-                     DataSource.Error(errorCode = ErrorCodes.EMPTY_RESPONSE)
-                  )
-               }
-            }
-         }
-         .addOnFailureListener {
-            GlobalScope.launch {
-               emit(DataSource.Error(message = it.message.orEmpty(), errorCode = ErrorCodes.SERVER_DOWN))
-            }
-         }
-   }
+    private val fbDB: FirebaseFirestore
+) : LatestRemoteDataSource {
+    override suspend fun getLatest(): Flow<DataSource<List<LatestM>>> = flow {
+        val response = fbDB.collection(SchemaName)
+            .orderBy(UpdatedField)
+            .limit(PAGINATION_VALUE)
+            .get()
+            .await()
+
+        if (!response.isEmpty) {
+            emit(DataSource.Success(response.documents.toMapLatest()))
+        } else {
+            emit(DataSource.Error(errorCode = ErrorCodes.EMPTY_RESPONSE))
+        }
+    }.catch {
+        emit(DataSource.Error(message = it.message.orEmpty(), errorCode = ErrorCodes.SERVER_DOWN))
+    }
 }
