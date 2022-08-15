@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -20,9 +21,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hana897trx.eclipseanime.data.remote.models.LatestM
 
 @Composable
-fun PromiseContent() {
+fun PromiseContent(
+   titleRow: String = "New chapters",
+   showMoreText: String = "Show more",
+   animeData: List<LatestM> = emptyList()
+) {
    Column(modifier = Modifier.fillMaxSize()) {
       Row(
          modifier = Modifier
@@ -32,7 +38,7 @@ fun PromiseContent() {
          verticalAlignment = CenterVertically
       ) {
          Text(
-            text = "New chapters",
+            text = titleRow,
             style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(start = 8.dp),
             fontWeight = FontWeight.Bold
@@ -41,12 +47,12 @@ fun PromiseContent() {
             onClick = {  },
             modifier = Modifier.padding(end = 8.dp)
          ) {
-            Text("Show more")
+            Text(showMoreText)
          }
       }
       LazyRow {
-         items(10) {
-            AnimeCard()
+         items(items = animeData) { anime ->
+            AnimeCard(anime)
          }
       }
    }

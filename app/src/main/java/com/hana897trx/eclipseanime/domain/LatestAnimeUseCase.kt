@@ -9,6 +9,7 @@ import com.hana897trx.eclipseanime.utils.ErrorCodes
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.last
 import javax.inject.Inject
 
 class LatestAnimeUseCase @Inject constructor(
@@ -18,7 +19,7 @@ class LatestAnimeUseCase @Inject constructor(
    operator fun invoke(networkSource: NetworkSource = NetworkSource.REMOTE) = flow {
       emit(DataSource.Loading)
       try {
-         emit(DataSource.Success(latestRepository.getLatest(networkSource)))
+         emit(latestRepository.getLatest(networkSource).last())
       } catch (e: Exception) {
          emit(DataSource.Error(message = e.message.orEmpty(), errorCode = ErrorCodes.NONE_ERROR))
       }

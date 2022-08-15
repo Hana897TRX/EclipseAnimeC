@@ -1,11 +1,12 @@
 package com.hana897trx.eclipseanime.ui.screens.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hana897trx.eclipseanime.domain.LatestAnimeUseCase
 import com.hana897trx.eclipseanime.utils.DataSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -16,6 +17,8 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val TAG = "HOME_LATEST"
+    private var _animeEvent : MutableStateFlow<LatestAnimeEvent> = MutableStateFlow(LatestAnimeEvent.Loading)
+    val animeEvent : StateFlow<LatestAnimeEvent> = _animeEvent
 
     init {
         getLatest()
@@ -23,9 +26,9 @@ class HomeViewModel @Inject constructor(
 
     private fun getLatest() = latestAnimeUseCase.invoke().onEach { response ->
         when(response) {
-            is DataSource.Loading -> { Log.w(TAG, "Loading") }
-            is DataSource.Error -> { Log.w(TAG, "Error") }
-            is DataSource.Success -> { Log.w(TAG, "Success") }
+            is DataSource.Loading -> { _animeEvent.emit(LatestAnimeEvent.Loading) }
+            is DataSource.Error -> {  _animeEvent.emit(LatestAnimeEvent.Error(response.message, response.errorCode)) }
+            is DataSource.Success -> {  _animeEvent.emit(LatestAnimeEvent.Success(response.data)) }
         }
     }.launchIn(viewModelScope)
 }
