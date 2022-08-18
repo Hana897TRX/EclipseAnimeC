@@ -27,7 +27,8 @@ import com.hana897trx.eclipseanime.data.remote.models.LatestM
 fun PromiseContent(
    titleRow: String = "New chapters",
    showMoreText: String = "Show more",
-   animeData: List<LatestM> = emptyList()
+   animeData: List<LatestM> = emptyList(),
+   animeCardClick : (anime: LatestM) -> Unit
 ) {
    Column(modifier = Modifier.fillMaxSize()) {
       Row(
@@ -52,7 +53,9 @@ fun PromiseContent(
       }
       LazyRow {
          items(items = animeData) { anime ->
-            AnimeCard(anime)
+            AnimeCard(anime) {
+               animeCardClick(it)
+            }
          }
       }
    }
@@ -62,6 +65,6 @@ fun PromiseContent(
 @Preview(showBackground = true)
 fun PromiseContentPreview() {
    MaterialTheme {
-      PromiseContent()
+      PromiseContent() {}
    }
 }

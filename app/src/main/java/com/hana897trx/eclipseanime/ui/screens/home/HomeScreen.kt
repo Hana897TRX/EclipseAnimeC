@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hana897trx.eclipseanime.R
+import com.hana897trx.eclipseanime.data.remote.models.LatestM
 import com.hana897trx.eclipseanime.ui.components.AnimeCard
 import com.hana897trx.eclipseanime.ui.components.PopularContent
 import com.hana897trx.eclipseanime.ui.components.PromiseContent
@@ -23,14 +24,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
+fun HomeScreen(
+    homeViewModel: HomeViewModel = viewModel(),
+    animeCardClick : (anime: LatestM) -> Unit
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         LazyColumn {
             item {
                 PopularContent()
             }
             item {
-                NewChaptersData(homeViewModel)
+                NewChaptersData(homeViewModel) {
+                    animeCardClick(it)
+                }
             }
             /*items(3) {
                 PromiseContent()
@@ -40,7 +46,10 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
 }
 
 @Composable
-private fun NewChaptersData(vm: HomeViewModel) {
+private fun NewChaptersData(
+    vm: HomeViewModel,
+    animeCardClick : (anime: LatestM) -> Unit
+) {
     val response = vm.animeEvent.collectAsState()
     when(response.value) {
         is LatestAnimeEvent.Loading -> {
@@ -57,7 +66,9 @@ private fun NewChaptersData(vm: HomeViewModel) {
                 titleRow = stringResource(R.string.home_latest_chapters),
                 showMoreText = stringResource(R.string.home_show_more_btn_content),
                 animeData = (response.value as LatestAnimeEvent.Success).data
-            )
+            ) {
+                animeCardClick(it)
+            }
         }
         is LatestAnimeEvent.Error -> {
 
@@ -69,6 +80,6 @@ private fun NewChaptersData(vm: HomeViewModel) {
 @Preview(showBackground = true)
 fun HomeScreenPreview() {
     EclipseAnimeCTheme {
-        HomeScreen()
+        HomeScreen() {}
     }
 }

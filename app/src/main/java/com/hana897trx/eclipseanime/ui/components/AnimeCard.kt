@@ -35,7 +35,8 @@ import com.hana897trx.eclipseanime.ui.theme.EclipseAnimeCTheme
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AnimeCard(
-    animeData: LatestM = LatestM()
+    animeData: LatestM = LatestM(),
+    animeCardClick : (animeData: LatestM) -> Unit
 ) {
     val coverUrl: Int = R.drawable.demo_cover
     Column(modifier = Modifier.fillMaxSize()) {
@@ -45,7 +46,7 @@ fun AnimeCard(
                 .height(300.dp)
                 .padding(8.dp),
             shape = RoundedCornerShape(6.dp),
-            onClick = {}
+            onClick = { animeCardClick(animeData) }
         ) {
             Column(
                 modifier = Modifier
@@ -86,6 +87,6 @@ fun AnimeCard(
 @Preview(showBackground = true)
 fun AnimeCardPreview() {
     EclipseAnimeCTheme {
-        AnimeCard()
+        AnimeCard() {}
     }
 }

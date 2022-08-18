@@ -24,4 +24,6 @@ object AnimeSchema {
 
 object Screens {
     const val HOME_SCREEN = "home"
+    const val DETAILS_SCREEN_ANIME_DATA_ARG = "{anime_data}"
+    const val DETAILS_SCREEN = "details"
 }
