@@ -36,7 +36,7 @@ import com.hana897trx.eclipseanime.ui.theme.EclipseAnimeCTheme
 @Composable
 fun AnimeCard(
     animeData: LatestM = LatestM(),
-    animeCardClick : (animeData: LatestM) -> Unit
+    animeCardClick : (anime: LatestM) -> Unit
 ) {
     val coverUrl: Int = R.drawable.demo_cover
     Column(modifier = Modifier.fillMaxSize()) {

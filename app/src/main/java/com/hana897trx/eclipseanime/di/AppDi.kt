@@ -1,13 +1,16 @@
 package com.hana897trx.eclipseanime.di
 
+import android.content.Context
+import androidx.room.Room
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.hana897trx.eclipseanime.data.repository.LatestRepository
-import com.hana897trx.eclipseanime.data.repository.LatestRepositoryImp
+import com.hana897trx.eclipseanime.data.local.config.RoomConfig
+import com.hana897trx.eclipseanime.utils.RoomDataBase.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -37,4 +40,13 @@ object AppDi {
    @Provides
    @IOContext
    fun provideIOContext() : CoroutineDispatcher = Dispatchers.IO
+
+   @Provides
+   fun provideRoomDB(@ApplicationContext context: Context) =
+      Room
+         .databaseBuilder(
+            context,
+            RoomConfig::class.java,
+            DATABASE_NAME
+         ).build()
 }

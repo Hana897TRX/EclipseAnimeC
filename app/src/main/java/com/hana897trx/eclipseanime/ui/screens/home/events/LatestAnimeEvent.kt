@@ -1,4 +1,4 @@
-package com.hana897trx.eclipseanime.ui.screens.home
+package com.hana897trx.eclipseanime.ui.screens.home.events
 
 import com.hana897trx.eclipseanime.data.remote.models.LatestM
 import com.hana897trx.eclipseanime.utils.DefaultValues

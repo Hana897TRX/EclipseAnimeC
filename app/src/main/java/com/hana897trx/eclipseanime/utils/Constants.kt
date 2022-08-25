@@ -14,6 +14,7 @@ enum class NetworkSource {
 enum class ErrorCodes(error: String) {
     EMPTY_RESPONSE("EMPTY RESPONSE"),
     SERVER_DOWN("SERVER_DOWN"),
+    ERROR_NOT_RELATED("not_related"),
     NONE_ERROR("")
 }
 
@@ -26,4 +27,8 @@ object Screens {
     const val HOME_SCREEN = "home"
     const val DETAILS_SCREEN_ANIME_DATA_ARG = "{anime_data}"
     const val DETAILS_SCREEN = "details"
+}
+
+object RoomDataBase {
+    const val DATABASE_NAME = "eclipseC"
 }

@@ -2,6 +2,7 @@ package com.hana897trx.eclipseanime.data.remote.models
 
 import android.os.Parcelable
 import com.google.firebase.firestore.DocumentSnapshot
+import com.hana897trx.eclipseanime.data.local.models.LatestAnimeDB
 import com.hana897trx.eclipseanime.utils.DefaultValues.EMPTY
 import com.hana897trx.eclipseanime.utils.DefaultValues.ZERO
 import kotlinx.parcelize.Parcelize
@@ -28,3 +29,15 @@ fun List<DocumentSnapshot>.toMapLatest() = map {
         updated = it["updated"].toString()
     )
 }
+
+fun LatestM.toLatestMDBSelected() =
+    LatestAnimeDB(
+        title = this.title,
+        subTitle = this.subTitle,
+        description = this.description,
+        coverUrl = this.coverUrl,
+        episodes = this.episodes,
+        genre = this.genre,
+        updated = this.updated,
+        selected = true
+    )
