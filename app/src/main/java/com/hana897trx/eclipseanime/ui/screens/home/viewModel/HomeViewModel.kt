@@ -42,7 +42,7 @@ class HomeViewModel @Inject constructor(
                 loadingState = { _saveSelectedAnime.emit(SaveSelectedAnimeEvent.Loading) },
                 errorState = { _saveSelectedAnime.emit(SaveSelectedAnimeEvent.Error(it.message, it.errorCode)) }
             )
-        }
+        }.launchIn(viewModelScope)
     }
 
     private fun getLatest() = latestAnimeUseCase.invoke().onEach { response ->

@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hana897trx.eclipseanime.data.remote.models.LatestM
 import com.hana897trx.eclipseanime.ui.screens.details.DetailsScreen
+import com.hana897trx.eclipseanime.ui.screens.details.DetailsViewModel
 import com.hana897trx.eclipseanime.ui.screens.home.HomeScreen
 import com.hana897trx.eclipseanime.ui.screens.home.viewModel.HomeViewModel
 import com.hana897trx.eclipseanime.ui.theme.EclipseAnimeCTheme
@@ -53,11 +54,8 @@ fun NavMap() {
             }
         }
         composable(DETAILS_SCREEN) { backStackEntry ->
-            val animeData =
-                backStackEntry.savedStateHandle.get<LatestM>(DETAILS_SCREEN_ANIME_DATA_ARG)
-            animeData?.run {
-                DetailsScreen(animeData)
-            }
+            val vm: DetailsViewModel = hiltViewModel(backStackEntry)
+            DetailsScreen(vm)
         }
     }
 }

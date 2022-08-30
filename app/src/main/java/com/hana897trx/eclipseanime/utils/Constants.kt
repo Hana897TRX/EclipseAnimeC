@@ -15,6 +15,7 @@ enum class ErrorCodes(error: String) {
     EMPTY_RESPONSE("EMPTY RESPONSE"),
     SERVER_DOWN("SERVER_DOWN"),
     ERROR_NOT_RELATED("not_related"),
+    NO_DATA_FOUNT("no data found"),
     NONE_ERROR("")
 }
 
